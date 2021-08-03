@@ -2,7 +2,7 @@
 
 ## Background
 
-![1-Logo](Images/1-Logo.png)
+![image](https://user-images.githubusercontent.com/78628287/128058884-664590a6-f153-4274-822c-faf8943ad5ca.png)
 
 Welcome to the United States Geological Survey, or USGS for short. The USGS is responsible for providing scientific data about natural hazards, the health of our ecosystems and environment; and the impacts of climate and land-use change. Their scientists develop new methods and tools to supply timely, relevant, and useful information about the Earth and its processes. As a new hire, you will be helping them out with an exciting new project!
 
@@ -24,17 +24,17 @@ The USGS is interested in building a new set of tools that will allow them to vi
 
 ### Level 1: Basic Visualization
 
-![2-BasicMap](Images/2-BasicMap.png)
+   ![image](https://user-images.githubusercontent.com/78628287/128058916-385985f0-cc9d-4a0e-9502-d9b722dec71e.png)
 
 Your first task is to visualize an earthquake data set.
 
 1. **Get your data set**
 
-   ![3-Data](Images/3-Data.png)
+   ![image](https://user-images.githubusercontent.com/78628287/128058939-b01a158b-d761-49a0-b4a7-c979c158c01a.png)
 
    The USGS provides earthquake data in a number of different formats, updated every 5 minutes. Visit the [USGS GeoJSON Feed](http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php) page and pick a data set to visualize. When you click on a data set, for example "All Earthquakes from the Past 7 Days", you will be given a JSON representation of that data. You will use the URL of this JSON to pull in the data for our visualization.
 
-   ![4-JSON](Images/4-JSON.png)
+   ![image](https://user-images.githubusercontent.com/78628287/128058969-f35e92fb-56b0-4fdf-9f00-11a64292fc57.png)
 
 2. **Import & Visualize the Data**
 
