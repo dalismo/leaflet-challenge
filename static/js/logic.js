@@ -67,3 +67,26 @@ let myMap = L.map("mymap", {
 L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
   }).addTo(myMap);
+
+  d3.json(earthquakesURL, function(earthquakeData) {
+    // Marker Size
+    function markerSize(magnitude) {
+      return magnitude * 5;
+    };
+    // Marker color by depth
+    function chooseColor(depth) {
+      switch(true) {
+        case depth > 90:
+          return "red";
+        case depth > 70:
+          return "orangered";
+        case depth > 50:
+          return "orange";
+        case depth > 30:
+          return "gold";
+        case depth > 10:
+          return "yellow";
+        default:
+          return "lightgreen";
+      }
+    }
