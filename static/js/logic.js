@@ -53,4 +53,17 @@ let baseMaps = {
     "Earthquakes": earthquakes,
     "Tectonic Plates": tectonicplates
   };
-  
+
+// Create the map and add layers
+let myMap = L.map("mymap", {
+  center: [
+    37.09, -95.71
+  ],
+  zoom: 2,
+  layers: [satelliteMap, earthquakes]
+});
+
+//Create the layer control
+L.control.layers(baseMaps, overlayMaps, {
+    collapsed: false
+  }).addTo(myMap);
