@@ -40,3 +40,17 @@ let darkMap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z
   accessToken: API_KEY
 });
 
+// Defining the basemaps
+let baseMaps = {
+    "Satellite Map": satelliteMap,
+    "Grayscale Map": grayscaleMap,
+    "Outdoors Map": outdoorsMap,
+    "Dark Map": darkMap
+  };
+  
+  // Creating the overlays
+  let overlayMaps = {
+    "Earthquakes": earthquakes,
+    "Tectonic Plates": tectonicplates
+  };
+  
