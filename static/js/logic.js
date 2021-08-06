@@ -66,12 +66,12 @@ L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
   }).addTo(myMap);
 
-  d3.json(earthquakesURL, function(earthquakeinfo) {
+  d3.json(earthquakesURL, function(earthquakeInfo) {
     // Markersize
     function markerSize(magnitude) {
       return magnitude * 5;
     };
-    // Marker colors in legend
+    // Marker colors
     function chooseColor(depth) {
       switch(true) {
         case depth > 90:
@@ -88,3 +88,34 @@ L.control.layers(baseMaps, overlayMaps, {
           return "lightgreen";
       }
     }
+  // Pop up showing place and time of earthquake
+  L.geoJSON(earthquakeInfo, {
+    pointToLayer: function (feature, latlng) {
+      return L.circleMarker(latlng, 
+        // Set the style of the markers
+        {
+          radius: markerSize(feature.properties.mag),
+          fillColor: chooseColor(feature.geometry.coordinates[2]),
+          fillOpacity: 0.7,
+          color: "black",
+          stroke: true,
+          weight: 0.5
+        }
+      );
+    },
+    onEachFeature: function(feature, layer) {
+      layer.bindPopup("<h3>Location: " + feature.properties.place + "</h3><hr><p>Date: "
+      + new Date(feature.properties.time) + "</p><hr><p>Magnitude: " + feature.properties.mag + "</p>");
+    }
+  }).addTo(earthquakes);
+  // Adding earthquakes layer to the createMap function
+  earthquakes.addTo(myMap);
+
+  // Get tectonic plate info from tectonicplatesURL
+  d3.json(tectonicplatesURL, function(data) {
+    L.geoJSON(data, {
+      color: "orange",
+      weight: 2
+    }).addTo(tectonicplates);
+    tectonicplates.addTo(myMap);
+  });
