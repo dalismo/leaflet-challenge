@@ -48,8 +48,22 @@ let baseMaps = {
   "Dark Map": darkMap
 };
 
-// Creating the overlays
 let overlayMaps = {
   "Earthquakes": earthquakes,
   "Tectonic Plates": tectonicplates
 };
+
+// Create the map, add layers and control layer
+let myMap = L.map("mapid", {
+  center: [
+    37.09, -95.71
+  ],
+  zoom: 2,
+  layers: [satelliteMap, earthquakes]
+});
+
+L.control.layers(baseMaps, overlayMaps, {
+    collapsed: false
+  }).addTo(myMap);
+
+  
