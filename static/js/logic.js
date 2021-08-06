@@ -63,35 +63,35 @@ let myMap = L.map("mapid", {
 });
 
 L.control.layers(baseMaps, overlayMaps, {
-    collapsed: false
-  }).addTo(myMap);
+  collapsed: false
+}).addTo(myMap);
 
-  d3.json(earthquakesURL, function(earthquakeInfo) {
-    // Markersize
-    function markerSize(magnitude) {
-      return magnitude * 5;
-    };
-    // Marker colors
-    function chooseColor(depth) {
-      switch(true) {
-        case depth > 90:
-          return "red";
-        case depth > 70:
-          return "orangered";
-        case depth > 50:
-          return "orange";
-        case depth > 30:
-          return "gold";
-        case depth > 10:
-          return "yellow";
-        default:
-          return "lightgreen";
-      }
+d3.json(earthquakesURL, function (earthquakeInfo) {
+  // Markersize
+  function markerSize(magnitude) {
+    return magnitude * 5;
+  };
+  // Marker colors
+  function chooseColor(depth) {
+    switch (true) {
+      case depth > 90:
+        return "red";
+      case depth > 70:
+        return "orangered";
+      case depth > 50:
+        return "orange";
+      case depth > 30:
+        return "gold";
+      case depth > 10:
+        return "yellow";
+      default:
+        return "lightgreen";
     }
+  }
   // Pop up showing place and time of earthquake
   L.geoJSON(earthquakeInfo, {
     pointToLayer: function (feature, latlng) {
-      return L.circleMarker(latlng, 
+      return L.circleMarker(latlng,
         // Set the style of the markers
         {
           radius: markerSize(feature.properties.mag),
@@ -103,19 +103,37 @@ L.control.layers(baseMaps, overlayMaps, {
         }
       );
     },
-    onEachFeature: function(feature, layer) {
+    onEachFeature: function (feature, layer) {
       layer.bindPopup("<h3>Location: " + feature.properties.place + "</h3><hr><p>Date: "
-      + new Date(feature.properties.time) + "</p><hr><p>Magnitude: " + feature.properties.mag + "</p>");
+        + new Date(feature.properties.time) + "</p><hr><p>Magnitude: " + feature.properties.mag + "</p>");
     }
   }).addTo(earthquakes);
   // Adding earthquakes layer to the createMap function
   earthquakes.addTo(myMap);
 
   // Get tectonic plate info from tectonicplatesURL
-  d3.json(tectonicplatesURL, function(data) {
+  d3.json(tectonicplatesURL, function (data) {
     L.geoJSON(data, {
       color: "orange",
       weight: 2
     }).addTo(tectonicplates);
     tectonicplates.addTo(myMap);
   });
+
+  // Legend
+  var legend = L.control({ position: "bottomright" });
+  legend.onAdd = function () {
+    var div = L.DomUtil.create("div", "info legend"),
+      depth = [-10, 10, 30, 50, 70, 90];
+
+    div.innerHTML += "<h3 style='text-align: center'>Depth</h3>"
+
+    for (var i = 0; i < depth.length; i++) {
+      div.innerHTML +=
+        '<i style="background:' + chooseColor(depth[i] + 1) + '"></i> ' +
+        depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+');
+    }
+    return div;
+  };
+  legend.addTo(myMap);
+});
