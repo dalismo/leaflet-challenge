@@ -4,8 +4,8 @@ let tectonicplatesURL = "https://github.com/fraxen/tectonicplates/blob/master/Ge
 
 
 // Create the layergroups
-let earthquakes = L.layergroup();
-let tectonicplates = L.layergroup();
+let earthquakes = L.layerGroup();
+let tectonicplates = L.layerGroup();
 
 // Creating the tile layers
 let satelliteMap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
@@ -40,53 +40,16 @@ let darkMap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z
   accessToken: API_KEY
 });
 
-// Defining the basemaps
+// Basemaps and overlays
 let baseMaps = {
-    "Satellite Map": satelliteMap,
-    "Grayscale Map": grayscaleMap,
-    "Outdoors Map": outdoorsMap,
-    "Dark Map": darkMap
-  };
-  
-  // Creating the overlays
-  let overlayMaps = {
-    "Earthquakes": earthquakes,
-    "Tectonic Plates": tectonicplates
-  };
+  "Satellite Map": satelliteMap,
+  "Grayscale Map": grayscaleMap,
+  "Outdoors Map": outdoorsMap,
+  "Dark Map": darkMap
+};
 
-// Create the map and add layers
-let myMap = L.map("mymap", {
-  center: [
-    37.09, -95.71
-  ],
-  zoom: 2,
-  layers: [satelliteMap, earthquakes]
-});
-
-//Create the layer control
-L.control.layers(baseMaps, overlayMaps, {
-    collapsed: false
-  }).addTo(myMap);
-
-  d3.json(earthquakesURL, function(earthquakeData) {
-    // Marker Size
-    function markerSize(magnitude) {
-      return magnitude * 5;
-    };
-    // Marker color by depth
-    function chooseColor(depth) {
-      switch(true) {
-        case depth > 90:
-          return "red";
-        case depth > 70:
-          return "orangered";
-        case depth > 50:
-          return "orange";
-        case depth > 30:
-          return "gold";
-        case depth > 10:
-          return "yellow";
-        default:
-          return "lightgreen";
-      }
-    }
+// Creating the overlays
+let overlayMaps = {
+  "Earthquakes": earthquakes,
+  "Tectonic Plates": tectonicplates
+};
